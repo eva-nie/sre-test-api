@@ -1,26 +1,30 @@
-import {expect} from 'chai';
+import { expect } from 'chai';
+import CasesHelper from '../helpers/cases.helper';
 import CountriesHelper from '../helpers/countries.helper';
 
-describe('Country codes', function () {
+describe('cases per country', function(){
+    const casesHelper = new CasesHelper();
     const countriesHelper = new CountriesHelper();
-    // const item = items[MAth.floor(Math.random() * items.length)];
+    let countryCode;
 
-    before(async function () {
+    before(async function() {
         await countriesHelper.get();
-    });
-
-    it('Response status code is 200', async function () {
-        expect(countriesHelper.response.statusCode).to.eq(200);
+        countryCode = countriesHelper.response.body[Math.floor(Math.random()*countriesHelper.response.body.length)];
+        await casesHelper.get(countryCode);
 
     });
 
-    it('Response has an array with at least one item', async function () {
-        expect(countriesHelper.response.body.length).to.be.at.least(1);
+    it('response status code is 200', async function() {
+        expect(casesHelper.response.statusCode).to.eq(200);
     });
 
-    it('Response contains string array', async function () {
-        for (let countryCode of countriesHelper.response.body) {
-            expect(countryCode).to.be.a('string');
+    it('response has an array with at least one item', async function() {
+        expect(casesHelper.response.body.length).to.be.at.least(1);
+    });
+
+    it('response has randomly chosen country code', async function() {
+        for(let caseData of casesHelper.response.body){
+            expect(caseData['Country_code']).to.eq(countryCode);
         }
     });
 });
