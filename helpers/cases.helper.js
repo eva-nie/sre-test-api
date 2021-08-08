@@ -1,17 +1,17 @@
 import supertest from 'supertest';
 
 
-class CountriesHelper {
+class CasesHelper {
     constructor() {
         this.response = null;
     }
 
-    async get() {
-        await supertest(process.env.Base_URL)
-            .get('/country_codes')
-            .then((res) => {this.response = res})
+    async get(countryCode) {
+        await supertest(process.env.BASE_URL)
+            .get(`/country/${countryCode}`)
+            .then((res) => { this.response = res})
         return this.response;
     }
 }
 
-export default CountriesHelper;
+export default CasesHelper; 
