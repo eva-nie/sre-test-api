@@ -1,4 +1,3 @@
-
 import supertest from 'supertest';
 
 
@@ -15,4 +14,4 @@ class CasesHelper {
     }
 }
 
-export default CasesHelper;
+export default CasesHelper; 
